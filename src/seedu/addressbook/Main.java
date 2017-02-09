@@ -4,6 +4,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.storage.StorageFile.*;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
@@ -104,10 +105,19 @@ public class Main {
      * @return result of the command
      */
     private CommandResult executeCommand(Command command)  {
+        CommandResult result = null;
         try {
             command.setData(addressBook, lastShownList);
-            CommandResult result = command.execute();
+            result = command.execute();
             storage.save(addressBook);
+            return result;
+        } catch (StorageOperationException soe) {
+            ui.showToUser(Messages.MESSAGE_SAVING_ERROR);
+            try {
+                storage.save(addressBook);
+            } catch (StorageOperationException e) {
+                throw new RuntimeException(e);
+            }
             return result;
         } catch (Exception e) {
             ui.showToUser(e.getMessage());
