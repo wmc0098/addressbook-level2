@@ -48,15 +48,15 @@ public class AdaptedPerson {
      * @param source future changes to this will not affect the created AdaptedPerson
      */
     public AdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().fullName;
+        name = source.getName().toString();
 
         phone = new AdaptedContactDetail();
         phone.isPrivate = source.getPhone().isPrivate();
-        phone.value = source.getPhone().value;
+        phone.value = source.getPhone().toString();
 
         email = new AdaptedContactDetail();
         email.isPrivate = source.getEmail().isPrivate();
-        email.value = source.getEmail().value;
+        email.value = source.getEmail().toString();
 
         address = new AdaptedContactDetail();
         address.isPrivate = source.getAddress().isPrivate();

@@ -9,12 +9,12 @@ import java.util.List;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name extends Contact {
 
     public static final String EXAMPLE = "John Doe";
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphabetic characters";
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alpha} ]+";
-    public final String fullName;
+    private static final boolean ISPRIVATE_NAME = false;
 
     /**
      * Validates given name.
@@ -22,11 +22,10 @@ public class Name {
      * @throws IllegalValueException if given name string is invalid.
      */
     public Name(String name) throws IllegalValueException {
-        String trimmedName = name.trim();
-        if (!isValidName(trimmedName)) {
+        super(name, ISPRIVATE_NAME);
+        if (!isValidName(value)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
-        this.fullName = trimmedName;
     }
 
     /**
@@ -40,24 +39,7 @@ public class Name {
      * Retrieves a listing of every word in the name, in order.
      */
     public List<String> getWordsInName() {
-        return Arrays.asList(fullName.split("\\s+"));
-    }
-
-    @Override
-    public String toString() {
-        return fullName;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
-                && this.fullName.equals(((Name) other).fullName)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return fullName.hashCode();
+        return Arrays.asList(value.split("\\s+"));
     }
 
 }

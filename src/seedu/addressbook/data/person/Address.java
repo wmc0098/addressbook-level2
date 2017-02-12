@@ -6,7 +6,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address extends Contact{
 
     public static final String EXAMPLE = "123, Clementi Ave 3, #12-34, 231534";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = 
@@ -18,7 +18,6 @@ public class Address {
     private final Street street;
     private final Unit unit;
     private final PostalCode postalCode;
-    private boolean isPrivate;
     
     private static final int INDEX_ADDRESS_BLOCK = 0;
     private static final int INDEX_ADDRESS_STREET = 1;
@@ -33,11 +32,9 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
-        String trimmedAddress = address.trim();
-        this.isPrivate = isPrivate;
-        //parse the address
-        String[] addressParts = trimmedAddress.split(",");
-        if (!isValidAddress(trimmedAddress, addressParts.length)) {
+        super(address, isPrivate);
+        String[] addressParts = value.split(",");
+        if (!isValidAddress(value, addressParts.length)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.block = new Block(addressParts[INDEX_ADDRESS_BLOCK]);
@@ -63,22 +60,6 @@ public class Address {
                 .append(this.unit.getUnit()).append(',')
                 .append(this.postalCode.getPostalCode())
                 .toString();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.toString().equals(((Address) other).toString())); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
     }
 
     /**
