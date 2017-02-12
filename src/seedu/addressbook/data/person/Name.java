@@ -23,7 +23,7 @@ public class Name extends Contact {
      */
     public Name(String name) throws IllegalValueException {
         super(name, ISPRIVATE_NAME);
-        if (!isValidName(value)) {
+        if (!isValidName(this.value)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
     }
@@ -39,7 +39,12 @@ public class Name extends Contact {
      * Retrieves a listing of every word in the name, in order.
      */
     public List<String> getWordsInName() {
-        return Arrays.asList(value.split("\\s+"));
+        return Arrays.asList(this.value.split("\\s+"));
+    }
+
+    @Override
+    public String getPrintableString() {
+        return "Name: " + this.toString();
     }
 
 }

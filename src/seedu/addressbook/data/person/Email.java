@@ -20,7 +20,7 @@ public class Email extends Contact {
      */
     public Email(String email, boolean isPrivate) throws IllegalValueException {
         super(email, isPrivate);
-        if (!isValidEmail(value)) {
+        if (!isValidEmail(this.value)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
     }
@@ -30,6 +30,11 @@ public class Email extends Contact {
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String getPrintableString() {
+        return "Email: " + this.toString();
     }
 
 }

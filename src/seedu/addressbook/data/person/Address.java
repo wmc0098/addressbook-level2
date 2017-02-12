@@ -33,8 +33,8 @@ public class Address extends Contact{
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         super(address, isPrivate);
-        String[] addressParts = value.split(",");
-        if (!isValidAddress(value, addressParts.length)) {
+        String[] addressParts = this.value.split(",");
+        if (!isValidAddress(this.value, addressParts.length)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.block = new Block(addressParts[INDEX_ADDRESS_BLOCK]);
@@ -67,5 +67,10 @@ public class Address extends Contact{
      */
     public String getAddressValue() {
         return this.toString();
+    }
+
+    @Override
+    public String getPrintableString() {
+        return "Address: " + this.toString();
     }
 }

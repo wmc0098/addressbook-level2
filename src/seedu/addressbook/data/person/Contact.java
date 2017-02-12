@@ -1,6 +1,6 @@
 package seedu.addressbook.data.person;
 
-public class Contact {
+public class Contact implements Printable{
     
     protected String value;
     protected boolean isPrivate;
@@ -33,6 +33,11 @@ public class Contact {
      */
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    @Override
+    public String getPrintableString() {
+        return "";
     }
 
 }
